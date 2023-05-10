@@ -5,28 +5,20 @@ unsigned int modVal;
 
 std::vector<std::vector<int>> domove(std::vector<std::vector<int>> puzzle, int dim1, int dim2, bool reverse)
 {
-  int loops = 1;
-  if(reverse && modVal == 5)
+  unsigned int inc = puzzle[dim1][dim2];
+  if(reverse)
   {
-    loops = 3;
+    inc = modVal - (inc * (modVal + 1) / 2) % modVal;
   }
-  else if(reverse && modVal == 7)
-  {
-    loops = 2;
-  }
-  for(int i = 0; i < loops; i++)
-  {
-    unsigned int inc = puzzle[dim1][dim2];
-    puzzle[dim1][dim2] = (puzzle[dim1][dim2] + inc) % modVal;
-    if(dim1 - 1 >= 0)
-      puzzle[dim1 - 1][dim2] = (puzzle[dim1 - 1][dim2] + inc) % modVal;
-    if(dim2 - 1 >= 0)
-      puzzle[dim1][dim2 - 1] = (puzzle[dim1][dim2 - 1] + inc) % modVal;
-    if(dim1 + 1 < (int)puzzle.size())
-      puzzle[dim1 + 1][dim2] = (puzzle[dim1 + 1][dim2] + inc) % modVal;
-    if(dim2 + 1 < (int)puzzle[0].size())
-      puzzle[dim1][dim2 + 1] = (puzzle[dim1][dim2 + 1] + inc) % modVal;
-  }
+  puzzle[dim1][dim2] = (puzzle[dim1][dim2] + inc) % modVal;
+  if(dim1 - 1 >= 0)
+    puzzle[dim1 - 1][dim2] = (puzzle[dim1 - 1][dim2] + inc) % modVal;
+  if(dim2 - 1 >= 0)
+    puzzle[dim1][dim2 - 1] = (puzzle[dim1][dim2 - 1] + inc) % modVal;
+  if(dim1 + 1 < (int)puzzle.size())
+    puzzle[dim1 + 1][dim2] = (puzzle[dim1 + 1][dim2] + inc) % modVal;
+  if(dim2 + 1 < (int)puzzle[0].size())
+    puzzle[dim1][dim2 + 1] = (puzzle[dim1][dim2 + 1] + inc) % modVal;
   return puzzle;
 }
 
